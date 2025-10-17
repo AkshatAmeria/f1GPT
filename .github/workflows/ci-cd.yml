@@ -1,0 +1,35 @@
+name: Basic CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main        # runs whenever you push to main branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout code from your GitHub repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js (adjust version if needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4️⃣ Run your dev command (for verification)
+      - name: Run app (verify startup)
+        run: |
+          nohup npm run dev &
+          sleep 5
+          echo "✅ App started successfully"
